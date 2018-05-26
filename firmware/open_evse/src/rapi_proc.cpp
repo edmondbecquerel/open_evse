@@ -388,6 +388,18 @@ int EvseRapiProcessor::processCmd()
       }
       break;
 #endif // CHARGE_LIMIT
+    case 'I': // meter ID
+      if (tokenCnt == 5) {
+        uint32_t id = (((uint32_t) htou8(tokens[1])) << 24) + 
+		      (((uint32_t) htou8(tokens[2])) << 16) + 
+		      (((uint32_t) htou8(tokens[3])) << 8)  +
+		      ((uint32_t) htou8(tokens[4]));
+        if (id) {
+          eeprom_write_dword((uint32_t*)EOFS_EDBEC_ID,id);
+          rc = 0;
+        }
+      }
+      break;
 #ifdef KWH_RECORDING
     case 'K': // set accumulated kwh
       g_WattHours_accumulated = dtou32(tokens[1]);
@@ -582,6 +594,11 @@ int EvseRapiProcessor::processCmd()
       rc = 0;
       break;
 #endif // CHARGE_LIMIT
+    case 'I': // meter ID
+      sprintf(buffer, "%08lX", (uint32_t)eeprom_read_dword((uint32_t*)EOFS_EDBEC_ID));
+      bufCnt = 1; // flag response text output
+      rc = 0;
+      break;
 #ifdef VOLTMETER
     case 'M':
       u1.i = g_EvseController.GetVoltScaleFactor();

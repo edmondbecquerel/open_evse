@@ -59,7 +59,7 @@
 //  to enable/disable charging function
 // if AUTH_LOCK_REG/IDX are also defined (see below), then a hardware pin is
 //  used to control access, rather than RAPI
-//#define AUTH_LOCK
+#define AUTH_LOCK
 
 // serial remote api
 #define RAPI
@@ -103,7 +103,7 @@
 #endif
 
 // charge for a specified amount of time and then stop
-#define TIME_LIMIT
+//#define TIME_LIMIT
 
 // support Mennekes (IEC 62196) type 2 locking pin
 //#define MENNEKES_LOCK
@@ -457,6 +457,9 @@
 #define EOFS_GROUP_CURRENT_CAPACITY 31 // 1 byte
 // non-volatile flags
 #define EOFS_DUO_NVFLAGS 32 // 1 byte
+
+//edbec meter id
+#define EOFS_EDBEC_ID 33 // 4 bytes
 
 // must stay within thresh for this time in ms before switching states
 #define DELAY_STATE_TRANSITION 250

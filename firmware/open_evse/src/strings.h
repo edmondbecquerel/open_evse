@@ -108,7 +108,8 @@ extern const char g_psEvConnected[] PROGMEM;
 #ifdef SHOW_DISABLED_TESTS
 extern const char g_psDisabledTests[] PROGMEM;
 #endif
-extern const char g_sRdyLAstr[];
+extern const char g_sMeterID[];
+extern const char g_psEdbec[] PROGMEM;
 extern const char g_psReady[] PROGMEM;
 extern const char g_psCharging[] PROGMEM;
 extern const char *g_sMaxCurrentFmt;

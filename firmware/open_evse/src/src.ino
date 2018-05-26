@@ -192,6 +192,8 @@ unsigned long g_WattHours_accumulated;
 unsigned long g_WattSeconds;
 #endif // KWH_RECORDING
 
+unsigned long g_MeterID;
+
 #ifdef PP_AUTO_AMPACITY
 AutoCurrentCapacityController g_ACCController;
 #endif
@@ -419,7 +421,7 @@ void OnboardDisplay::Init()
 #ifdef OPENEVSE_2
   LcdPrint_P(0,PSTR("Open EVSE II"));
 #else
-  LcdPrint_P(0,PSTR("Open EVSE"));
+  LcdPrint_P(0,PSTR("edbec"));
 #endif
   LcdPrint_P(0,1,PSTR("Ver. "));
   LcdPrint_P(VERSTR);
@@ -508,7 +510,6 @@ void OnboardDisplay::Update(int8_t updmode)
     }
 
 #ifdef LCD16X2
-    sprintf(g_sTmp,g_sRdyLAstr,(int)svclvl,currentcap);
 #endif
     switch(curstate) {
     case EVSE_STATE_A: // not connected
@@ -533,14 +534,16 @@ void OnboardDisplay::Update(int8_t updmode)
       g_DelayTimer.PrintTimerIcon();
 #endif //#ifdef DELAYTIMER
       LcdPrint_P(g_psReady);
-      LcdPrint(10,0,g_sTmp);
+      sprintf(g_sTmp,g_sMeterID,g_MeterID);
+      LcdPrint(0,1,g_sTmp);
+      //LcdPrint(11,0,g_sTmp);
 
 #ifdef KWH_RECORDING
-      sprintf(g_sTmp,STRF_WH,(g_WattSeconds / 3600) );
-      LcdPrint(0,1,g_sTmp);
+      //sprintf(g_sTmp,STRF_WH,(g_WattSeconds / 3600) );
+      //LcdPrint(0,1,g_sTmp);
 
-      sprintf(g_sTmp,STRF_KWH,(g_WattHours_accumulated / 1000));  // display accumulated kWh
-      LcdPrint(7,1,g_sTmp);
+      //sprintf(g_sTmp,STRF_KWH,(g_WattHours_accumulated / 1000));  // display accumulated kWh
+      //LcdPrint(7,1,g_sTmp);
 #endif // KWH_RECORDING
 
 #endif //Adafruit RGB LCD
@@ -896,8 +899,7 @@ void OnboardDisplay::Update(int8_t updmode)
 	sprintf(g_sTmp,g_sHHMMfmt,g_DelayTimer.GetStopTimerHour(),g_DelayTimer.GetStopTimerMin());
 	LcdPrint(11,1,g_sTmp);
       } else {
-	sprintf(g_sTmp,g_sRdyLAstr,(int)svclvl,currentcap);
-	LcdPrint(10,0,g_sTmp);
+	LcdPrint_P(11,0,g_psEdbec);
       }
     }
 #endif // DELAYTIMER
@@ -2384,6 +2386,8 @@ void setup()
 
       g_WattHours_accumulated = eeprom_read_dword((uint32_t*)EOFS_KWH_ACCUMULATED);        // get the stored value for the kWh from eeprom
 #endif // KWH_RECORDING
+
+  g_MeterID = eeprom_read_dword((uint32_t*)EOFS_EDBEC_ID);
 }  // setup()
 
 

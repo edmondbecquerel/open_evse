@@ -106,7 +106,8 @@ const char g_psEvConnected[] PROGMEM = STR_CONNECTED;
 const char g_psDisabledTests[] PROGMEM = STR_TEST_DISABLED;
 #endif
 
-const char g_sRdyLAstr[] = STRF_L_A;
+const char g_sMeterID[] = STR_EDBEC_ID;
+const char g_psEdbec[] PROGMEM = STR_EDBEC;
 const char g_psReady[] PROGMEM = STR_READY;
 const char g_psCharging[] PROGMEM = STR_CHARGING;
 const char *g_sMaxCurrentFmt = STRF_MAX_CURRENT;

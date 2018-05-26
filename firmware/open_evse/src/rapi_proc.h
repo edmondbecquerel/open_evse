@@ -139,6 +139,7 @@ SG 0|1 - disable/enable ground check
  $SG 0*0E
  $SG 1*0F
 SH kWh - set cHarge limit to kWh
+SI ## ## ## ## - set meter ID (## ## ## ## is a 4-byte uint, in hex)
 SK - set accumulated Wh (v1.0.3+)
  $SK 0*12 - set accumulated Wh to 0
 SL 1|2|A  - set service level L1/L2/Auto
@@ -194,6 +195,8 @@ GG - get charging current and voltage
 GH - get cHarge limit
  response: $OK kWh
  kWh = 0 = no charge limit
+GI - get meter ID
+ response: $OK ########
 GM - get voltMeter settings
  response: $OK voltcalefactor voltoffset
  $GM^2E
